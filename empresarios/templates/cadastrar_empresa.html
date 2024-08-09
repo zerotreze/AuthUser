@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+{% load static %}
+{% block 'head' %}
+ <link rel="stylesheet" href="{% static 'usuarios/css/usuarios.css' %}">
+{% endblock 'head' %}
+{% block 'body' %}
+{% include 'partials/barra_navegacao.html' %}
+ <div class="container">
+ <br>
+ <br>
+ {% if messages %}
+ {% for message in messages %}
+ <section class="alert {{message.tags}}">
+ {{message}}
+ </section>
+ {% endfor %}
+ {% endif %}
+ <div class="row">
+ <div class="col-md">
+    <form action="{% url 'cadastrar_empresa' %}" method="POST" enctype='multipart/form-data'>{% csrf_token %}
+ <form action="" method="">
+
+    <label>Nome</label>
+    <input type="text" name="nome" placeholder="Digite o nome da sua empresa ..." class="form-control">
+    <br>
+    <label>Cnpj</label>
+    <input type="text" name="cnpj" placeholder="Digite o seu CNPJ ..." class="form-control">
+    <br>
+    <label>Site</label>
+    <input type="text" name="site" placeholder="Digite o seu site ..." class="form-control">
+    <br>
+    <label>A quanto tempo a startup existe ?</label>
+    <select name="tempo_existencia" class="form-select">
+        {% for te in tempo_existencia %}
+        <option value="{{te.0}}">{{te.1}}</option>
+       {% endfor %}
+       
+    </select>
+    <br>
+    <label>Descreva a sua empresa</label>
+    <textarea name="descricao" class="form-control"></textarea>
+    <br>
+    <label>Data final para captação</label>
+    <input type="date" name="data_final" class="form-control">
+    <br>
+    <label>Qual a porcentagem (%) de equity oferecida em contrapartida ao valor investido?</label>
+    <input type="number" name="percentual_equity" class="form-control">
+    <input type="submit" class="btn btn-lg btn-indigo" value="cadastrar">
+
+</div>
+<div class="col-md">
+<br>
+<label>Qual o estágio da empresa ?</label>
+<br>
+<br>
+<input type="checkbox" name="estagio" value="I"><span>&nbsp&nbsp Tenho apenas uma ideia</span>
+<br>
+<input type="checkbox" name="estagio" value="MVP"><span>&nbsp&nbsp Possuo um MVP</span>
+<br>
+<input type="checkbox" name="estagio" value="MVPP"><span>&nbsp&nbsp Possuo um MVP com clientes pagantes</span>
+<br>
+<input type="checkbox" name="estagio" value="E"><span>&nbsp&nbsp Empresa pronta para escalar </span>
+<br>
+<br>
+<label>Qual área sua startup está inseria ?</label>
+<select name="area" class="form-select">
+
+    {% for area in areas %}
+    <option value="{{area.0}}">{{area.1}}</option>
+   {% endfor %}
+   
+</select>
+<br>
+<label>Qual seu público alvo</label>
+<select name="publico_alvo" class="form-select">
+<option value="BTC">BTC</option>
+<option value="B2B">B2B</option>
+</select>
+<br>
+<label>Qual valor deseja captar ?</label>
+<input type="number" name="valor" class="form-control">
+<br>
+<label>Envie o pitch de apresentação</label>
+<input type="file" name="pitch" class="form-control">
+<br>
+<label>Envie a logo da empresa</label>
+<input type="file" name="logo" class="form-control">
+</form>
+</div>
+</div>
+</div>
+{% endblock 'body' %}

@@ -1,0 +1,46 @@
+.bg-img{
+    background-image: url('/static/usuarios/img/bg.png');
+    height: 100vh;
+    background-size: cover;
+   }
+   .form-auth{
+    padding: 50px;
+   }
+   .text-logo{
+    color: rgb(161, 161, 161);
+    font-weight: 100;
+   }
+   .container-form{
+    width: 35%;
+    margin-top: 4em;
+   
+   }
+   .input-pers{
+    margin-top: 5px;
+    background-color: transparent !important;
+    font-size: 18px;
+    color: white !important;
+   }
+   .btn-indigo{
+    background-color: var(--contrast-color);
+    color: white;
+    width: 100%;
+    margin-top: 20px;
+    font-size: 20px;
+   }
+
+   .btn-indigo-normal{
+    background-color: var(--contrast-color);
+    color: white;
+   }
+   .btn-indigo:hover{
+    background-color: #332cb6;
+   }
+   .centralizar{
+    text-align: center;
+   }
+   .texto{
+    color: white;
+    text-decoration: none;
+   }
+   
