@@ -1,0 +1,121 @@
+{% extends "base.html" %}
+{% load static %}
+{% block 'head' %}
+<link rel="stylesheet" href="{% static 'empresarios/css/listar_empresas.css' %}">
+<link rel="stylesheet" href="{% static 'empresarios/css/empresa.css' %}">
+<link rel="stylesheet" href="{% static 'usuarios/css/usuarios.css' %}">
+{% endblock 'head' %}
+{% block 'body' %}
+ {% include "partials/barra_navegacao.html" %}
+ <br><br>
+ <div class="container">
+ <div class="row">
+ <div class="col-md-7">
+ <div class="row">
+ {% if messages %}
+ {% for message in messages %}
+ <section class="alert {{message.tags}}">
+ {{message}}
+
+ </section>
+ {% endfor %}
+ {% endif %}
+ <div class="col-md-3">
+ <img src="{{empresa.logo.url}}" class="foto-empresa" alt="">
+ </div>
+ <div class="col-md">
+ <h3>{{empresa.nome}}</h3>
+ <span class="badge bg-primary">{{empresa.get_area_display}}</span>
+ </div>
+
+ </div>
+ <br><br>
+ <div class="progress" wtyle="80%">
+
+ <div class="progress-bar bg-success"
+ style="width: {{percentual_vendido}}%"></div>
+ </div>
+ <br>
+{% if concretizado %}
+ <span class="badge bg-success">V</span><span>&nbsp &nbsp A empresa já atingiu 80% do percentual captado, portanto seu investimento será concretizado.</span>
+ {%else%}
+ <span class="badge bg-warning">V</span><span>&nbsp &nbsp Seu Investimento será concretizado caso a empresa atinja pelo menos 80% do valor esperado até a data final</span>
+ {%endif%}
+ <hr>
+ <p>{{empresa.descricao}}</p>
+ <div class="col-md">
+ <h5>Valuation esperado</h5>
+ <span class="sub-fonte">Esperado: {{empresa.valuation}}</span>
+ <br>
+ <br>
+ <h5>Percentual</h5>
+ <span class="sub-fonte">Total a venda: {{empresa.percentual_equity}}%</span>
+ <br>
+ <span class="sub-fonte">Disponivel à compra: {{percentual_disponivel}}%</span>
+ </div>
+ <br>
+ <span class="badge bg-warning">{{empresa.publico_alvo}}</span>
+ <br><br>
+ <h4 style="color: #92D5EB">Indicadores |</h4>
+
+ <div class="row">
+ <div class="col-md-3" >
+ <div class="dark-color" style="padding: 20px; text-align: center;">
+ <h5>CAC</h5>
+ <h6>R$ 200</h6>
+ </div>
+ </div>
+ <div class="col-md-3" >
+ <div class="dark-color" style="padding: 20px; text-align: center;">
+ <h5>CAC</h5>
+ <h6>R$ 200</h6>
+ </div>
+ </div>
+
+
+ </div>
+ <hr>
+ <div class="row">
+ <h4>Faça sua proposta</h4>
+ <br><br>
+ <div class="col-md">
+    <form action="{% url 'realizar_proposta' empresa.id %}" method="POST"> {% csrf_token %}
+        <input type="number" name="valor" class="form-control" placeholder="Valor para investir">
+ <br>
+<input type="submit" class="btn btn-indigo-normal" value="Salvar">
+ </div>
+ <div class="col-md">
+ <input type="number" name="percentual" class="form-control" placeholder="Percentual desejado">
+ </form>
+ </div>
+
+ </div>
+ </div>
+ <div class="col-md-5 intereses-investimentos">
+ <video name='demo' controls autoplay width='100%'>
+ <source src="{{empresa.pitch.url}}" type="video/mp4"></source>
+ </video>
+ <hr>
+{% for doc in documentos %}
+ <div class="list_documentos">
+ <div class="row">
+ <div class="col-md-2" style="text-align: center">
+ <a href="{{doc.arquivo.url}}">
+ <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" style="color: white;" fill="currentColor" class="bi bi-download" viewBox="0 0 16 16">
+ <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5"/>
+ <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708z"/>
+ </svg>
+ </a>
+ </div>
+<div class="col-md-6">{{doc.titulo}}</div>
+ <div class="col-md-4" style="text-align: right;">
+
+ </div>
+ </div>
+ </div>
+{%endfor%}
+ </div>
+ </div>
+ </div>
+ <br><br>
+{% endblock 'body' %}

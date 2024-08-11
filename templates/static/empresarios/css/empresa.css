@@ -1,0 +1,54 @@
+.intereses-investimentos{
+    min-height: 80vh;
+    padding: 30px
+   
+   }
+   .card-investimento{
+    padding: 10px;
+    text-align: center;
+    vertical-align: middle;
+   }
+   .foto-perfil{
+    width: 60%;
+    border-radius: 10px;
+   }
+   .foto-empresa {
+    width: 100%;
+    border-radius: 10px;
+   }
+   .sub-fonte{
+    color:rgb(117, 117, 117);
+    font-size: 17px;
+    font-weight: bold;
+   }
+   .sub-fonte2{
+    color:rgb(117, 117, 117);
+    font-size: 14px;
+   }
+   .titulo2{
+    font-weight: bold
+}
+.point-white{
+ width: 15px;
+ height: 15px;
+ background-color: white;
+}
+.point-green{
+ width: 15px;
+ height: 15px;
+ background-color: #1d7e1d;
+}
+.point-blue{
+ width: 15px;
+ height: 15px;
+ background-color: #4351d4;
+}
+.documentos{
+ width: 80%;
+ margin-top: 40px;
+}
+.list_documentos{
+ background-color: var(--dark-color);
+ padding: 20px;
+
+}

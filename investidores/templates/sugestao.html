@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block 'head' %}
+<link rel="stylesheet" href="{% static 'empresarios/css/listar_empresas.css' %}">
+<link rel="stylesheet" href="{% static 'empresarios/css/empresa.css' %}">
+<link rel="stylesheet" href="{% static 'usuarios/css/usuarios.css' %}">
+<link rel="stylesheet" href="{% static 'investidores/css/investidores.css' %}">
+{% endblock 'head' %}
+
+{% block 'body' %}
+    {% include "partials/barra_navegacao.html" %}
+    <br><br>
+    <div class="container">
+        <div class="centralizar">
+            <h2>Receba sugestões de empresas</h2>
+            <p>Vamos analisar seu perfil e indicar as melhores opções de investimentos</p>
+        </div>
+        <br>
+        <div class="dark-color cont-sugestao">
+            <h3>Tipo de investidor</h3>
+            <div style="width: 60%">
+                <form action="{% url 'sugestao' %}" method="POST">{% csrf_token %}
+                    <p>Selecione conservador caso busque investimentos de menos risco e com menor retorno, selecione despojado se prefere correr mais riscos e ter maiores possibilidades de retorno.</p>
+                    <select name="tipo" id="" class="form-select">
+                        <option value="C">Conservador</option>
+                        <option value="D">Despojado</option>
+                    </select>
+                    <br>
+                    <h3>Áreas de interesses</h3>
+                    <p>Selecione as áreas de mercado que possui interesse em investir</p>
+                    <select name="area" id="" class="form-select" multiple>
+                        {% for area in areas %}
+                            <option value="{{area.0}}">{{area.1}}</option>
+                        {% endfor %}
+                    </select>
+                    <br>
+                    <h3>Valor que deseja investir</h3>
+                    <p>Coloque o valor máximo que deseja investir</p>
+                    <input type="number" name="valor" class="form-control" placeholder="00,00">
+                    <br>
+                    <input type="submit" class="btn btn-indigo">
+                </form>
+            </div>
+        </div>
+        <br>
+        <br>
+        <div class="row">
+            {% for empresa in empresas %}
+                <div class="col-md">
+                    <div class="card dark-color" style="width: 18rem; border: none;">
+                        <img class="card-img-top dark-color" src="{{empresa.logo.url}}" alt="Card image cap">
+                        <div class="card-body dark-color">
+                            <h5 class="card-title">{{empresa.nome}}</h5>
+                            <p class="card-text">{{empresa.descricao}}</p>
+                         <a href="{% url 'ver_empresa' empresa.id %}" class="btn btn-indigo">Acessar</a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock 'body' %}

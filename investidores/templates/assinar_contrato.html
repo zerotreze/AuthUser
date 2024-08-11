@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% load static %}
+{% block 'head' %}
+<link rel="stylesheet" href="{% static 'empresarios/css/listar_empresas.css' %}">
+<link rel="stylesheet" href="{% static 'empresarios/css/empresa.css' %}">
+<link rel="stylesheet" href="{% static 'usuarios/css/usuarios.css' %}">
+{% endblock 'head' %}
+{% block 'body' %}
+ {% include "partials/barra_navegacao.html" %}
+ <br><br>
+ <div class="container">
+ <div class="row">
+ <div class="col-md-7">
+ <div class="row">
+ {% if messages %}
+ {% for message in messages %}
+ <section class="alert {{message.tags}}">
+ {{message}}
+
+ </section>
+ {% endfor %}
+ {% endif %}
+ <div class="col-md-3">
+ <img src="{{pi.empresa.logo.url}}" class="foto-empresa" alt="">
+ </div>
+ <div class="col-md">
+ <h3>Assinar contrato</h3>
+ </div>
+
+ </div>
+ </div>
+ <div style="margin-top: 40px; padding: 20px" class="contrato dark-color">
+ <h3>Contrato de investimento</h3>
+ <p>Ao assinar esse contrato você concorda com todas as cláusulas abaixo</p>
+
+ <ol>
+ <li>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy</li>
+ <li>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy</li>
+ <li>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy</li>
+ </ol>
+ </div>
+ <form action="{% url 'assinar_contrato' pi.id %}" enctype='multipart/form-data' method="POST" style="margin-top: 20px;"> {% csrf_token %}
+ <input type="file" name="selfie" class="form-control" style="width: 40%">
+ <br>
+ <input type="file" name="rg" class="form-control" style="width: 40%">
+ <br>
+ <input type="submit" class="btn btn-indigo-normal" value="Assinar contrato">
+ </form>
+ </div>
+ <br><br>
+{% endblock 'body' %}

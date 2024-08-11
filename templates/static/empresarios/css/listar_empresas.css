@@ -1,0 +1,26 @@
+.container_empresas{
+    padding: 20px;
+   }
+   .table {
+    border-collapse: collapse !important;
+    width: 100%;
+   
+   }
+   .cabecalho{
+    background-color: transparent !important;
+    border: none;
+    color: white !important;
+    text-align: center;
+   }
+   .linha {
+    vertical-align: middle;
+    padding: 24px;
+    text-align: center;
+    background-color: var(--main-color) !important;
+    color: white !important;
+    border-bottom: 1px solid #6154a8;
+   }
+   th {
+    background-color: var;
+   }
+   

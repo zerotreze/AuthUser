@@ -1,0 +1,179 @@
+{% extends "base.html" %}
+{% load static %}
+{% block 'head' %}
+<link rel="stylesheet" href="{% static 'empresarios/css/listar_empresas.css' %}">
+<link rel="stylesheet" href="{% static 'empresarios/css/empresa.css' %}">
+<link rel="stylesheet" href="{% static 'usuarios/css/usuarios.css' %}">
+{% endblock 'head' %}
+{% block 'body' %}
+ {% include "partials/barra_navegacao.html" %}
+ <br><br>
+ <div class="container">
+ <div class="row">
+ <div class="col-md-7">
+ <div class="row">
+ {% if messages %}
+ {% for message in messages %}
+ <section class="alert {{message.tags}}">
+ {{message}}
+
+ </section>
+ {% endfor %}
+ {% endif %}
+ <div class="col-md-3">
+    
+ <img src="{{empresa.logo.url}}" class="foto-empresa" alt="">
+ </div>
+ <div class="col-md">
+ <h3>Percentual captado</h3>
+ <h2>{{empresa.nome}}</h2>
+
+
+ </div>
+
+ </div>
+ <br><br>
+ <div class="row">
+ <div class="col-md">
+<h2 class="titulo2">XYZ Investidores</h2>
+ <a href="#" class="sub-fonte">Ver investidores</a>
+ </div>
+ <div class="col-md">
+ <h2 class="titulo2">{{total_captado}} Captados</h2>
+ </div>
+ </div>
+ <hr>
+ <div class="row">
+    <div class="col-md">
+    <h5>Percentual de equity vendido</h5>
+    <div class="progress">
+    <div class="progress-bar bg-primary"
+    style="width: {{percentual_vendido}}%"></div>
+    <div class="progress-bar bg-success"
+    style="width: {{empresa.percentual_equity}} %"></div>
+    </div>
+    <br>
+    <label class="point-white"></label><span>&nbsp&nbsp Percentual total da empresa</span>
+    <br>
+    <label class="point-green"></label><span>&nbsp&nbsp Percentual a ser vendido</span>
+    <br>
+    <label class="point-blue"></label><span>&nbsp&nbsp Percentual vendido</span>
+    </div>
+    <div class="col-md">
+    <h5>Valuation</h5>
+    <span class="sub-fonte">Atual: {{valuation_atual}}</span>
+    <br>
+    <span class="sub-fonte">Esperado: {{empresa.valuation}}</span>
+    </div>
+    <div class="documentos">
+    <h3>Anexar documentos</h3>
+    <form action="{% url 'add_doc' empresa.id %}" method="POST" enctype='multipart/form-data'>{% csrf_token %}
+    <label>Titulo</label>
+    <input type="text" name="titulo" class="form-control" placeholder="Titulo do documento">
+    <br>
+    <label>Arquivo</label>
+    <input type="file" name="arquivo" class="form-control">
+    <br>
+    <input type="submit" class="btn btn-success" value="Cadastrar">
+    </form>
+
+    <br>
+
+    
+{% for documento in documentos %}
+ <div class="list_documentos">
+ <div class="row">
+ <div class="col-md-2" style="text-align: center">
+ <a href="{{documento.arquivo.url}}">
+ <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" style="color: white;" fill="currentColor" class="bi bi-download" viewBox="0 0 16 16">
+ <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5"/>
+ <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708z"/>
+ </svg>
+ </a>
+
+ </div>
+ <div class="col-md-6">{{documento.titulo}}</div>
+ <div class="col-md-4" style="text-align: right;">
+ <a href="{% url 'excluir_dc' documento.id %}">
+ <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" style="color: white;" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
+ <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z"/>
+ </svg>
+ </a>
+ </div>
+ </div>
+ </div>
+ {%endfor%}
+
+ <br>
+ <hr>
+ <div class="row">
+    <div class="col-md">
+    <form action="{% url 'add_metrica' empresa.id %}" method="POST">{% csrf_token %}
+    <label>Titulo</label>
+    <input type="text" class="form-control" name="titulo" placeholder="Adicione um texto ...">
+   
+    </div>
+    <div class="col-md">
+    <label>Valor</label>
+    <input type="text" class="form-control" name="valor" placeholder="Adicione um valor ...">
+    </div>
+   
+    </div>
+    <br>
+    <input type="submit" value="Salvar" class="btn btn-indigo-normal">
+    </form>
+    <br><br>
+    </div>
+    </div>
+   
+    </div>
+    <div class="col-md-5 dark-color intereses-investimentos">
+    <h3>Solicitações de investimentos</h3>
+    <hr>
+    <br>
+   
+    {% for pi in proposta_investimentos_enviada %}
+    <div class="bg-color-dark card-investimento">
+    <div class="row">
+    <div class="col-md">
+    <img src="{% static 'geral/img/foto_perfil.webp' %}" class="foto-perfil" alt="">
+    </div>
+    <div class="col-md-5" style="text-align: left">
+    <span class="sub-fonte">{{pi.investidor}}</span>
+    <br>
+    <span class="sub-fonte2">{{pi.valor}}</span>
+    <br>
+    <span class="sub-fonte2">{{pi.percentual}}%
+
+        {% if pi.valuation >= empresa.valuation %}
+<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-up-fill" style="color: #00ff00;" viewBox="0 0 16 16">
+ <path d="m7.247 4.86-4.796 5.481c-.566.647-.106 1.659.753 1.659h9.592a1 1 0 0 0 .753-1.659l-4.796-5.48a1 1 0 0 0-1.506 0z"/>
+</svg>
+{% else %}
+ <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" style="color: #ff0000;" class="bi bi-caret-down-fill" viewBox="0 0 16 16">
+ <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
+ </svg>
+{% endif %}
+
+
+
+
+</span>
+</div>
+<div class="col-md">
+<a href="{% url 'gerenciar_proposta' pi.id %}?acao=aceitar" class="btn btn-indigo-normal">Aceitar</a>
+
+<br>
+<a href="{% url 'gerenciar_proposta' pi.id %}?acao=recusar" style="margin-top: 5px;" class="btn btn-danger">Negar</a>
+
+</div>
+</div>
+</div>
+<br>
+{% endfor %}
+<br>
+
+</div>
+</div>
+</div>
+{% endblock 'body' %}   
